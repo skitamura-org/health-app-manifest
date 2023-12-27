@@ -1,7 +1,7 @@
 {%- if values.componentName %}
   {%- set name = values.componentName %}
 {%- else %}
-  {%- set name = values.repoName %}
+  {%- set name = values.app_name %}
 {% endif -%}
 
 apiVersion: backstage.io/v1alpha1
@@ -11,7 +11,7 @@ kind: ${{ values.entityKind }}
 kind: Component
 {%- endif %}
 metadata:
-  name: ${{ name }}
+  name: ${{ values.app_name }}
   {%- if values.title %}
   title: ${{ values.title }}
   {%- endif %}
@@ -20,17 +20,17 @@ metadata:
   {%- endif %}
   annotations:
     {%- if values.hostUrl %}
-    argocd/app-name: ${{ name }}
+    argocd/app-name: ${{ values.app_name }}
     {%- endif %}
 #    {%- if values.ci == "../../../skeletons/tekton/" %}
     tektonci/build-namespace: ${{ values.app_name }}-develop
 #    {%- endif %}
-    backstage.io/kubernetes-id: ${{ name }}
+    backstage.io/kubernetes-id: ${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.
 #    {%- if values.sourceControl == "gitlab.com" %}
 #    gitlab.com/project-slug: ${{ values.orgName }}/${{ values.repoName }}
 #    {%- elif values.sourceControl == "github.com" %}
-    github.com/project-slug: ${{ values.orgName }}/${{ values.repoName }}
+    github.com/project-slug: ${{ values.org_name }}/${{ values.app_name }}
 #    {%- elif values.sourceControl == "dev.azure.com" %}
 #    dev.azure.com/project-repo: ${{ values.orgName }}/${{ values.repoName }}
 #    {%- endif %}
