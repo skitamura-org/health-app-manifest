@@ -126,6 +126,7 @@ spec:
       name: Publish App Repository
       action: publish:gitlab
       input:
+        allowedHosts: ['github.com']
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
@@ -159,6 +160,7 @@ spec:
       name: Publish Manifest Repository
       action: publish:gitlab
       input:
+        allowedHosts: ['github.com']
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-manifest
         repoVisibility: public
         sourcePath: ./tenant-manifest
