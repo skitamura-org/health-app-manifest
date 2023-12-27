@@ -1,0 +1,16 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: ${{ values.app_name }}-trigger-binding
+spec:
+  params:
+    - name: git-app-rev
+      value: $(body.checkout_sha)
+    - name: git-app-url
+      value: $(body.repository.git_http_url)
+    - name: git-manifests-url
+      value: 'https://github.com/${{ values.org_name }}/${{ values.app_name }}-manifest'
+    - name: gitlab-user
+      value: $(body.user_username)
+    - name: gitlab-email
+      value: $(body.user_email)

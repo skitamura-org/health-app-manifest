@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: testcafe
+  labels:
+    app.kubernetes.io/version: "0.1"
+  annotations:
+    tekton.dev/pipelines.minVersion: "0.21.0"
+    tekton.dev/categories: Testing
+    tekton.dev/tags: test
+spec:
+  description: >-
+    The following task can be used to perform E2E tests for deployed applications by TestCafe.
+    TestCafe offers simplyfied E2E tests for multi browsers and allows users to write readable test codes in javascript or typescript. 
+  params:
+  - name: TESTCAFE_SCRIPT
+    description: The testcafe CLI command to run
+    type: string
+    default: "testcafe $@"
+  - name: TESTCAFE_IMAGE
+    description: The location of the testcafe image.
+    default: testcafe/testcafe:latest
+  - name: TARGET_URL
+    description: Target URL for E2E tests.
+    default: ""
+  workspaces:
+  - name: tests
+  stepTemplate:
+    env:
+    - name: TARGET_URL
+      value: $(params.TARGET_URL)
+  steps:
+  - name: e2e-tests
+    image: $(params.TESTCAFE_IMAGE)
+    script: |
+      [[ "$(workspaces.tests.bound)" == "true" ]] && \
+        cd $(workspaces.tests.path) 
+
+        $(params.TESTCAFE_SCRIPT)

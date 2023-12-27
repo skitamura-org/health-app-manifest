@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-develop
+  namespace: openshift-gitops
+  labels:
+    app: node-build-config-openshift
+    environment: dev
+spec:
+  destination:
+    namespace: app-develop
+    server: https://kubernetes.default.svc
+  project: dev-health
+  source:
+    kustomize:
+    path: deploy/overlays/dev
+    repoURL: https://gitlab.com/${GITLAB_USER}/rhf2021-cicd-manifest.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ApplyOutOfSyncOnly=true 
+      - CreateNamespace=true

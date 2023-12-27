@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev-health
+  namespace: openshift-gitops
+spec:
+  description: dev environment of health system
+  destinations:
+  - namespace: app-develop
+    server: https://kubernetes.default.svc
+  sourceRepos:
+  - https://gitlab.com/${GITLAB_USER}/rhf2021-cicd-manifest.git
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'

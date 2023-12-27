@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-env-configmap
+data:
+  ARGOCD_SERVER: ${ARGO_SERVER}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-env-secret
+type: Opaque
+stringData:
+  ARGOCD_USERNAME: admin
+  ARGOCD_PASSWORD: ${ARGO_PASSWORD}

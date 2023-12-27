@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-production
+  namespace: openshift-gitops
+  labels:
+    app: node-build-config-openshift
+    environment: prod
+spec:
+  destination:
+    namespace: app-production
+    server: https://kubernetes.default.svc
+  project: prod-health
+  source:
+    kustomize:
+    path: deploy/overlays/prod
+    repoURL: https://gitlab.com/${GITLAB_USER}/rhf2021-cicd-manifest.git
+    targetRevision: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ApplyOutOfSyncOnly=true 
+      - CreateNamespace=true

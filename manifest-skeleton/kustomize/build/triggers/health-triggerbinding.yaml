@@ -1,0 +1,16 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: health-trigger-binding
+spec:
+  params:
+    - name: git-app-rev
+      value: $(body.checkout_sha)
+    - name: git-app-url
+      value: $(body.repository.git_http_url)
+    - name: git-manifests-url
+      value: 'https://gitlab.com/$(body.user_username)/rhf2021-cicd-manifest'
+    - name: gitlab-user
+      value: $(body.user_username)
+    - name: gitlab-email
+      value: $(body.user_email)

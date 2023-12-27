@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: el-health-listener
+spec:
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: el-health-listener
+    weight: 100
+  port:
+    targetPort: http-listener
+  wildcardPolicy: None
