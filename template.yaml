@@ -124,13 +124,13 @@ spec:
 
     - id: publish-app
       name: Publish App Repository
-      action: publish:gitlab
+      action: publish:github
       input:
         allowedHosts: ['github.com']
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
-        defaultBranch: master
+        defaultBranch: main
 
 
     - id: manifest_template
@@ -158,13 +158,13 @@ spec:
 
     - id: publish-app
       name: Publish Manifest Repository
-      action: publish:gitlab
+      action: publish:github
       input:
         allowedHosts: ['github.com']
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-manifest
         repoVisibility: public
         sourcePath: ./tenant-manifest
-        defaultBranch: master
+        defaultBranch: main
 
 #    - id: catalogTemplate
 #      name: Generating the Catalog Info Component
