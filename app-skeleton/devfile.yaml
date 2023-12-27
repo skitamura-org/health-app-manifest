@@ -1,0 +1,18 @@
+schemaVersion: 2.2.0
+metadata:
+  name: devspace-innerloop
+  controller.devfile.io/storage-type: per-user
+components:
+  - attributes:
+      controller.devfile.io/merge-contribution: true
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel8:latest
+      sourceMapping: /projects
+      volumeMounts:
+        - name: npm
+          path: /home/user/.npm
+    name: universal-developer-image
+
+  - volume:
+       size: 1G
+    name: npm
