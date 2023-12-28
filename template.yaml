@@ -201,6 +201,16 @@ spec:
 #        repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}
 #        defaultBranch: master
 
+    - id: create-argocd-resources
+      name: Create ArgoCD Resources
+      action: argocd:create-resources
+      input:
+        appName: ${{ parameters.app_name }}-bootstrap
+        argoInstance: main
+        namespace: rhdh-gitops
+        repoUrl: https://github.com/${{ parameters.org_name }}/${{ parameters.app_name }}-manifest.git
+        path: 'argocd/'
+
   output:
     links:
       - title: Open the Source Code Repository
