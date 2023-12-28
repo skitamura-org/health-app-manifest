@@ -11,7 +11,7 @@ resources:
   - trivy.yaml
   # preparations
   - tekton-pvc.yaml
-  - torigger-sa.yaml
+  - trigger-sa.yaml
   - health-eventlistner.yaml
   - health-triggerbinding.yaml
   - health-triggertemplate.yaml
