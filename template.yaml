@@ -130,13 +130,13 @@ spec:
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
-        defaultBranch: main
+#        defaultBranch: main
 
     - id: register
       name: Registering the Catalog Info Component
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps.publish-app.output.repoContentsUrl }}
+        repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
     - id: manifest_template
