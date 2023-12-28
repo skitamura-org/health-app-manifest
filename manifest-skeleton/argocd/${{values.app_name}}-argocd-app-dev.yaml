@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/${{ values.org_name }}/${{ values.app_name }}-manifest.git 
-    targetRevision: HEAD
+    targetRevision: develop
     path: ./kustomize/app/overlays/dev
   destination:
     server: https://kubernetes.default.svc

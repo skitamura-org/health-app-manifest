@@ -130,7 +130,7 @@ spec:
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
-#        defaultBranch: main
+        defaultBranch: develop
 
     - id: register
       name: Registering the Catalog Info Component
@@ -170,7 +170,7 @@ spec:
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-manifest
         repoVisibility: public
         sourcePath: ./tenant-manifest
-        defaultBranch: main
+        defaultBranch: develop
 
 #    - id: catalogTemplate
 #      name: Generating the Catalog Info Component
