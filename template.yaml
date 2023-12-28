@@ -132,6 +132,12 @@ spec:
         sourcePath: ./tenant-app
         defaultBranch: main
 
+    - id: register
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish-app.output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
 
     - id: manifest_template
       name: Generating the CI Component
@@ -194,14 +200,6 @@ spec:
 #        description: ${{ parameters.description }}
 #        repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}
 #        defaultBranch: master
-
-    - id: register
-      name: Registering the Catalog Info Component
-      action: catalog:register
-      input:
-        #repoContentsUrl: ${{ steps.publish-app.output.repoContentsUrl }}
-        sourcePath: ./tenant-app
-        catalogInfoPath: "/catalog-info.yaml"
 
   output:
     links:
