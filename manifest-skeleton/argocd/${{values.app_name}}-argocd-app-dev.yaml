@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: ${{ values.destination }}
+    repoURL: https://github.com/${{ parameters.org_name }}/${{ parameters.app_name }}-manifest.git 
     targetRevision: HEAD
     path: ./kustomize/app/overlays/dev
   destination:
