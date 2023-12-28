@@ -12,7 +12,7 @@ resources:
   # preparations
   - tekton-pvc.yaml
   - trigger-sa.yaml
-  - health-eventlistner.yaml
-  - health-triggerbinding.yaml
-  - health-triggertemplate.yaml
+  - ${{values.app_name}}-eventlistener.yaml
+  - ${{values.app_name}}-triggerbinding.yaml
+  - ${{values.app_name}}-triggertemplate.yaml
   - el-route.yaml 
