@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/${{ parameters.org_name }}/${{ parameters.app_name }}-manifest.git 
+    repoURL: https://github.com/${{ values.org_name }}/${{ values.app_name }}-manifest.git 
     targetRevision: HEAD
     path: ./kustomize/build
   destination:
