@@ -67,7 +67,7 @@ spec:
     - git-clone-${{ values.app_name }}-manifests
     params:
     - name: SONAR_HOST_URL
-      value: 'http://sonarqube:9000'
+      value: 'http://sonarqube.sonarqube.svc:9000'
     workspaces:
     - name: source
       workspace: shared-workspace

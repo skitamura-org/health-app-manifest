@@ -10,7 +10,7 @@ resources:
   - kustomize.yaml
   - trivy.yaml
   # preparations
-  - sonarqube-install.yaml
+  #- sonarqube-install.yaml
   - tekton-pvc.yaml
   - trigger-sa.yaml
   - ${{values.app_name}}-eventlistener.yaml
