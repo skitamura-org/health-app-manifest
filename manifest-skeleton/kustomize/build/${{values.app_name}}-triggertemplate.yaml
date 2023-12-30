@@ -51,6 +51,6 @@ spec:
             emptyDir: {}
           - name: sonar-settings
             secret:
-              secretName: sonar-settigns
+              secretName: sonar-settings
           - name: temp-dir
             emptyDir: {}
