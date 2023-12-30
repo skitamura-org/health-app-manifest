@@ -148,4 +148,4 @@ spec:
         git diff
         git add -A ./kustomize/app/overlays/
         git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
-        git push
+        git push origin $(GIT_MANIFEST_REV)
