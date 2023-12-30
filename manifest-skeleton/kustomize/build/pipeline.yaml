@@ -71,7 +71,7 @@ spec:
     - name: SONAR_PROJECT_KEY
       value: 'test-project'
     workspaces:
-    - name: source-dir
+    - name: source
       workspace: shared-workspace
     - name: sonar-settings
       workspace: sonar-settings
