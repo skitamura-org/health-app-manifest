@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ values.app_name }}-webhook-job
+spec:
+  backoffLimit: 100
+  template:
+    spec:
+      containers:
+      - name: create-webhook
+        command:
+          - /bin/bash
+          - '-c'
+          - |
+            set -x
+            ansible-playbook -i localhost /scripts/playbook.yaml 
+        image: quay.io/agnosticd/ee-multicloud:latest
+        volumeMounts:
+          - mountPath: /scripts
+            name: {{ values.app_name }}-script-vol
+          - mountPath: /secrets/env.yml
+            name: webhook-secret
+            subPath: env.yml
+      restartPolicy: Never
+      volumes:
+      - name: {{ values.app_name }}-script-vol
+        configMap:
+          name: {{ values.app_name }}-webhook-script
+      - name: webhook-secret
+        secret:
+          secretName: {{ values.app_name }}-webhook-secret
+

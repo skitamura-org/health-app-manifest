@@ -16,3 +16,5 @@ resources:
   - ${{values.app_name}}-triggerbinding.yaml
   - ${{values.app_name}}-triggertemplate.yaml
   - el-route.yaml 
+  - webhook-playbook-config.yaml
+  - job-create-webhook.yaml
