@@ -7,10 +7,10 @@ spec:
     - name: git-app-rev
       value: $(body.checkout_sha)
     - name: git-app-url
-      value: $(body.repository.git_http_url)
+      value: 'https://github.com/${{ values.org_name }}/${{ values.app_name }}-app'
     - name: git-manifests-url
       value: 'https://github.com/${{ values.org_name }}/${{ values.app_name }}-manifest'
-    - name: gitlab-user
-      value: $(body.user_username)
-    - name: gitlab-email
-      value: $(body.user_email)
+    - name: git-user
+      value: $(body.pusher.name)
+    - name: git-email
+      value: $(body.pusher.email)

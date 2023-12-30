@@ -11,8 +11,8 @@ spec:
       description: The app git repository url
     - name: git-manifests-url
       description: The manifest git repository url
-    - name: gitlab-user
-    - name: gitlab-email
+    - name: git-user
+    - name: git-email
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -34,9 +34,9 @@ spec:
           - name: git-manifests-revision
             value: 'main'
           - name: git-manifests-username
-            value: $(tt.params.gitlab-user)
+            value: $(tt.params.git-user)
           - name: git-manifests-useremail
-            value: $(tt.params.gitlab-email)
+            value: $(tt.params.git-email)
         workspaces:
           - name: shared-workspace
             persistentVolumeClaim:
