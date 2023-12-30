@@ -142,10 +142,18 @@ spec:
     - name: GIT_SCRIPT
       value: |
         cd $(workspaces.source.path)
-        git config --global user.email $(GIT_USER_EMAIL) 
-        git config --global user.name $(GIT_USER_NAME)
-        git checkout $(GIT_MANIFEST_REV)
+        git config --global user.email $(params.git-manifests-username) 
+        git config --global user.name $(params.git-manifests-useremail)
+        git checkout $(params.git-manifests-revision)
         git diff
         git add -A ./kustomize/app/overlays/
         git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
-        git push origin $(GIT_MANIFEST_REV)
+#      value: |
+#        cd $(workspaces.source.path)
+#        git config --global user.email $(GIT_USER_EMAIL) 
+#        git config --global user.name $(GIT_USER_NAME)
+#        git checkout $(GIT_MANIFEST_REV)
+#        git diff
+#        git add -A ./kustomize/app/overlays/
+#        git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
+#        git push origin $(GIT_MANIFEST_REV)
