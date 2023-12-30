@@ -6,7 +6,10 @@ spec:
   params:
     - name: git-app-rev
       description: The git revision
-      default: master 
+      default: develop
+    - name: git-manifest-rev
+      description: The git revision
+      default: develop
     - name: git-app-url
       description: The app git repository url
     - name: git-manifests-url
@@ -32,7 +35,7 @@ spec:
             #value: 'https://gitlab.com/jpishikawa/rhf2021-cicd-manifest'
             value: $(tt.params.git-manifests-url)
           - name: git-manifests-revision
-            value: 'main'
+            value: $(tt.params.git-manifest-rev)
           - name: git-manifests-username
             value: $(tt.params.git-user)
           - name: git-manifests-useremail
