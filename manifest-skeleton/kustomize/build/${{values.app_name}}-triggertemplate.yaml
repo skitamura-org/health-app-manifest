@@ -16,6 +16,7 @@ spec:
       description: The manifest git repository url
     - name: git-user
     - name: git-email
+    - name: git-access-token
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -40,6 +41,8 @@ spec:
             value: $(tt.params.git-user)
           - name: git-manifests-useremail
             value: $(tt.params.git-email)
+          - name: git-manifests-user-access-token
+            value: $(tt.params.git-access-token)
         workspaces:
           - name: shared-workspace
             persistentVolumeClaim:

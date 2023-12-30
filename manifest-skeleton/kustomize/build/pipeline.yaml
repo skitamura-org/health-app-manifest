@@ -34,6 +34,9 @@ spec:
   - name: git-manifests-useremail  
     type: string
     description: Git Repo User Email for Manifests
+  - name: git-manifests-user-access-token 
+    type: string
+    description: Git Repo User Access Token for Manifests
   tasks:
   - name: git-clone-${{ values.app_name }}
     taskRef:
@@ -142,13 +145,12 @@ spec:
     - name: GIT_SCRIPT
       value: |
         cd $(workspaces.source.path)
-        git config --global user.email $(params.git-manifests-username) 
-        git config --global user.name $(params.git-manifests-useremail)
         git checkout $(params.git-manifests-revision)
         git diff
         git add -A ./kustomize/app/overlays/
         git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
         git push origin $(params.git-manifests-revision)
+#        git config --global url.https://$(params.git-manifests-username):$(params.gitmanifests-user-access-token)@github.com/.insteadOf https://github.com/
 #      value: |
 #        cd $(workspaces.source.path)
 #        git config --global user.email $(GIT_USER_EMAIL) 
