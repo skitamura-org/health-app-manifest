@@ -50,6 +50,7 @@ spec:
           - name: vul-cache
             emptyDir: {}
           - name: sonar-settings
-            emptyDir: {}
+            secretRef:
+              name: sonar-settigns 
           - name: temp-dir
             emptyDir: {}
