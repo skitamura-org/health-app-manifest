@@ -114,7 +114,7 @@ spec:
     params:
     - name: KUSTOMIZE_SCRIPT
       value: |
-        cd ./deploy/overlays/dev
+        cd ./kustomize/app/overlays/dev
         kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
         cd ../stg
         kustomize edit set image ___IMAGE_URL___@___IMAGE_DIGEST___=image-registry.openshift-image-registry.svc:5000/${{ values.app_name }}-develop/${{ values.app_name }}-record@$(tasks.build-container.results.IMAGE_DIGEST)
@@ -137,13 +137,15 @@ spec:
       value: $(params.git-manifests-username)
     - name: GIT_USER_EMAIL
       value: $(params.git-manifests-useremail)
+    - name: GIT_MANIFEST_REV
+      value: $(params.git-manifests-revision)
     - name: GIT_SCRIPT
       value: |
         cd $(workspaces.source.path)
         git config --global user.email $(GIT_USER_EMAIL) 
         git config --global user.name $(GIT_USER_NAME)
-        git checkout main
+        git checkout $(GIT_MANIFEST_REV)
         git diff
-        git add -A ./deploy/overlays/
+        git add -A ./kustomize/app/overlays/
         git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
         git push
