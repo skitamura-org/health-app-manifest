@@ -148,6 +148,7 @@ spec:
         git diff
         git add -A ./kustomize/app/overlays/
         git commit -m "[TEKTON-PIPELINES] Change container image in manifests."
+        git push origin $(params.git-manifests-revision)
 #      value: |
 #        cd $(workspaces.source.path)
 #        git config --global user.email $(GIT_USER_EMAIL) 
