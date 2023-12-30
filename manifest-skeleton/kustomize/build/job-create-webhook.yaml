@@ -25,7 +25,7 @@ spec:
       volumes:
       - name: ${{ values.app_name }}-script-vol
         configMap:
-          name: ${{ values.app_name }}-webhook-script
+          name: webhook-playbook
       - name: webhook-secret
         secret:
           secretName: ${{ values.app_name }}-webhook-secret
