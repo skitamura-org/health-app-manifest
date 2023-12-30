@@ -6,7 +6,7 @@ spec:
   params:
     - name: git-app-rev
       description: The git revision
-      default: master
+      default: master 
     - name: git-app-url
       description: The app git repository url
     - name: git-manifests-url

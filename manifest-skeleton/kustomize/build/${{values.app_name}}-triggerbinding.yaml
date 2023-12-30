@@ -5,7 +5,7 @@ metadata:
 spec:
   params:
     - name: git-app-rev
-      value: $(body.checkout_sha)
+      value: $(body.head_commit.id)
     - name: git-app-url
       value: 'https://github.com/${{ values.org_name }}/${{ values.app_name }}-app'
     - name: git-manifests-url
