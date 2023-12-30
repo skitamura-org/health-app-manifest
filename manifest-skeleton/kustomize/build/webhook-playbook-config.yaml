@@ -46,8 +46,8 @@ data:
                 "active": true,
                 "events": [
                     "push",
-                    "tag_push",
-                    "releases",
+                    #"tag_push",
+                    #"releases",
                 ],
                 "config":{
                     "url": "https://{{ webhook_url }}/{{ cluster_url }}",
