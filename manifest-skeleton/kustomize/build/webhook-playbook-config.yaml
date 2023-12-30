@@ -11,7 +11,7 @@ data:
         git_org: ${{ values.org_name }}
         git_repo: ${{ values.app_name }}-app
         #git_token: ""
-        webhook_url: "webhook-${{ values.app_name }}-el-${{ values.app_name }}-dev" 
+        webhook_url: "webhook-${{ values.app_name }}-el-${{ values.app_name }}-develop" 
         #cluster_url: ""
         #webhook_url: https://webhook-${{ values.app_name }}-el-${{ values.app_name }}-dev.apps.aws-cluster-01.sandbox1966.opentlc.com
         #webhook_secret: ""
@@ -50,7 +50,7 @@ data:
                     #"releases",
                 ],
                 "config":{
-                    "url": "https://{{ webhook_url }}/{{ cluster_url }}",
+                    "url": "https://{{ webhook_url }}.{{ cluster_url }}",
                     "secret": "{{ webhook_secret }}",
                     "content_type": "json",
                     "insecure_ssl": "0"
