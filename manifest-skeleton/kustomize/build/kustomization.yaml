@@ -19,3 +19,4 @@ resources:
   - webhook-playbook-config.yaml
   - job-create-webhook.yaml
   - external-secret-webhook.yaml
+  - external-secret-webhook-secret.yaml

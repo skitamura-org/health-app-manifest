@@ -29,4 +29,3 @@ spec:
       - name: webhook-secret
         secret:
           secretName: ${{ values.app_name }}-webhook-secret
-
