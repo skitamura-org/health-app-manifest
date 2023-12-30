@@ -6,7 +6,7 @@ data:
   playbook.yaml: |
     - hosts: localhost
       vars_files:
-        - /secret/env.yml
+        - /secrets/env.yml
       vars:
         git_org: ${{ values.org_name }}
         git_repo: ${{ values.app_name }}-app
