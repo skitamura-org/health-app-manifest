@@ -4,9 +4,9 @@ metadata:
   name: ${{ values.app_name }}-pipeline
 spec:
   workspaces:
-  - name: ${{ values.app_name }}-shared-workspace
+  - name: shared-workspace
     description: Git Repo for Patient Health Records Apps
-  - name: ${{ values.app_name }}-manifest-workspace
+  - name: manifest-workspace
     description: Git Repo for k8s manifest
   - name: sonar-settings
     description: Temporary dir for sonarqube-scan Task
@@ -45,7 +45,7 @@ spec:
       value: $(params.git-revision)
     workspaces:
     - name: output
-      workspace: ${{ values.app_name }}-shared-workspace
+      workspace: shared-workspace
       
   - name: git-clone-${{ values.app_name }}-manifests
     taskRef:
@@ -57,7 +57,7 @@ spec:
       value: $(params.git-manifests-revision)
     workspaces:
     - name: output
-      workspace: ${{ values.app_name }}-manifest-workspace
+      workspace: manifest-workspace
 
   - name: scan-app
     taskRef:
@@ -72,7 +72,7 @@ spec:
       value: 'test-project'
     workspaces:
     - name: source-dir
-      workspace: ${{ values.app_name }}-shared-workspace
+      workspace: shared-workspace
     - name: sonar-settings
       workspace: sonar-settings
 
@@ -84,7 +84,7 @@ spec:
     - scan-app
     workspaces:
     - name: source
-      workspace: ${{ values.app_name }}-shared-workspace
+      workspace: shared-workspace
     params:
     - name: PATH_CONTEXT
       value: $(workspaces.source.path)/$(params.target-path)
@@ -112,7 +112,7 @@ spec:
     - test-container
     workspaces:
     - name: manifest-dir
-      workspace: ${{ values.app_name }}-manifest-workspace
+      workspace: manifest-workspace
     params:
     - name: KUSTOMIZE_SCRIPT
       value: |
@@ -131,7 +131,7 @@ spec:
     - update-manifests
     workspaces:
     - name: source
-      workspace: ${{ values.app_name }}-manifest-workspace
+      workspace: manifest-workspace
     - name: input
       workspace: temp-dir
     params:
