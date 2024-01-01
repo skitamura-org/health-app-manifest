@@ -16,3 +16,6 @@ spec:
   system: ${{ values.system }}
   lifecycle: production
   owner: ${{ values.owner }}
+  git: ${{ values.git }}
+  git_host_url: ${{ values.git_host_url }}
+  git_owner_name: ${{ values.git_owner_name }}
