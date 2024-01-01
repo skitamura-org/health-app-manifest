@@ -186,7 +186,7 @@ spec:
       action: catalog:register
       input:
 #        repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
-        repoContentsUrl: https://${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app 
+        repoContentsUrl: https://${{ parameters.git_host_url }}/${{ parameters.git_owner_name }}/${{ parameters.app_name }}-app
         catalogInfoPath: "/catalog-info.yaml"
 
     - id: create-argocd-resources
