@@ -84,6 +84,7 @@ spec:
                   title: Git Host URL
                   type: string
                   default: github.com
+                  description: Specify the GitHub or GitLab host URL(e.g., github.com)
                 git_owner_name:
                   title: GitHub Organization Name or User Name
                   type: string
@@ -121,7 +122,7 @@ spec:
         targetPath: ./tenant-app
 
     - id: publish-app-to-github
-      if: ${{ parameters.git == github }}
+      if: ${{ parameters.git == "github" }}
       name: Publish App Repository to GitHub
       action: publish:github
       input:
@@ -133,7 +134,7 @@ spec:
         protectDefaultBranch: false
 
     - id: publish-app-to-gitlab
-      if: ${{ parameters.git == gitlab }}
+      if: ${{ parameters.git == "gitlab" }}
       name: Publish App Repository to GitLab
       action: publish:gitlab
       input:
@@ -211,16 +212,16 @@ spec:
   output:
     links:
       - title: Open the Source Code Repository
-        if: ${{ parameters.git == github }}
+        if: ${{ parameters.git == "github" }}
         url: ${{ steps.publish-app-to-github.output.remoteUrl }}
       - title: Open the Catalog Info Component
-        if: ${{ parameters.git == github}}
+        if: ${{ parameters.git == "github" }}
         icon: catalog
         entityRef: ${{ steps.register-to-github.output.entityRef }}
       - title: Open the Source Code Repository
-        if: ${{ parameters.git == gitlab }}
+        if: ${{ parameters.git == "gitlab" }}
         url: ${{ steps.publish-app-to-gitlab.output.remoteUrl }}
       - title: Open the Catalog Info Component
-        if: ${{ parameters.git == gitlab }}
+        if: ${{ parameters.git == "gitlab" }}
         icon: catalog
         entityRef: ${{ steps.register-to-gitlab.output.entityRef }}
