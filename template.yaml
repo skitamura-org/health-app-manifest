@@ -63,6 +63,7 @@ spec:
           oneOf:
             - properties:
                 git:
+                  type: string
                   enum:
                     - github
                   enumNames:
@@ -78,6 +79,7 @@ spec:
                   description: Specify the GitHub Organization or User to register the repository
             - properties:
                 git:
+                  type: string
                   enum:
                     - gitlab
                   enumNames:
@@ -99,9 +101,13 @@ spec:
         url: ./app-skeleton
         values:
           git: ${{ parameters.git }}
+          git: ${{ parameters.git }}
           git_host_url: ${{ parameters.git_host_url }}
           git_owner_name: ${{ parameters.git_owner_url }}
           app_name: ${{ parameters.app_name }}
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          description: ${{ parameters.description }}
         targetPath: ./tenant-app
 
     - id: publish-app-to-github
@@ -167,7 +173,7 @@ spec:
 
     - id: register-to-github
       if: ${{ parameters.git == "github" }}
-      name: Registering the Catalog Info Component
+      name: Registering the Catalog Info Component to GitHub
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
@@ -175,7 +181,7 @@ spec:
 
     - id: register-to-gitlab
       if: ${{ parameters.git == "gitlab" }}
-      name: Registering the Catalog Info Component
+      name: Registering the Catalog Info Component to GitLab
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish-app-to-gitlab'].output.repoContentsUrl }}
