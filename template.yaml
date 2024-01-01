@@ -75,11 +75,11 @@ spec:
         git:
           oneOf:
             - properties:
-                git:
-                  enum:
-                    - github
-                  enumNames:
-                    - GitHub
+#                git:
+#                  enum:
+#                    - github
+#                  enumNames:
+#                    - GitHub
                 github:
                   const: github
                 git_host_url:
@@ -91,11 +91,11 @@ spec:
                   type: string
                   description: Specify the GitHub Organization or User to register the repository
             - properties:
-                git:
-                  enum:
-                    - gitlab
-                  enumNames:
-                    - GitLab
+#                git:
+#                  enum:
+#                    - gitlab
+#                  enumNames:
+#                    - GitLab
                 gitlab:
                   const: gitlab
                 git_host_url:
