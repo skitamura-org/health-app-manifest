@@ -3,3 +3,9 @@ kind: Kustomization
 
 resources:
 - ../../base
+
+- eventlistener.yaml
+- external-secret-webhook.yaml
+- external-secret-github-basic-auth.yaml
+- external-secret-webhook-secret.yaml
+- webhook-playbook-config.yaml 
