@@ -14,6 +14,8 @@ spec:
     description: Cache vulnerabilities infomations
   - name: temp-dir
     description: Temporary dir for git-cli Task
+  - name: basic-auth
+    description: .git-credentials file for git-cli Task
   params:
   - name: target-path
     type: string 
@@ -135,6 +137,8 @@ spec:
       workspace: manifest-workspace
     - name: input
       workspace: temp-dir
+    - name: basic-auth
+      workspace: basic-auth
     params:
     - name: GIT_USER_NAME
       value: $(params.git-manifests-username)

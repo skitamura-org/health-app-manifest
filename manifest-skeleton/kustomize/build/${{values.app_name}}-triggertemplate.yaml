@@ -57,3 +57,6 @@ spec:
               secretName: sonar-settings
           - name: temp-dir
             emptyDir: {}
+          - name: basic-auth
+            secret:
+              secretName: github-basic-auth
