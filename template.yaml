@@ -71,41 +71,41 @@ spec:
           enumNames:
             - GitHub
             - GitLab
-      dependencies:
-        git:
-          oneOf:
-            - properties:
-#                git:
-#                  enum:
-#                    - github
-#                  enumNames:
-#                    - GitHub
-#                github:
-#                  const: github
-                git_host_url:
-                  title: Git Host URL
-                  type: string
-                  default: github.com
-                git_owner_name:
-                  title: GitHub Organization Name or User Name
-                  type: string
-                  description: Specify the GitHub Organization or User to register the repository
-            - properties:
-#                git:
-#                  enum:
-#                    - gitlab
-#                  enumNames:
-#                    - GitLab
-#                gitlab:
-#                  const: gitlab
-                git_host_url:
-                  title: Git Host URL
-                  type: string
-                  default: gitlab.com
-                git_owner_name:
-                  title: GitLab Group Name or User Name
-                  type: string
-                  description: Specify the GitLab Group or User to register the repository
+#      dependencies:
+#        git:
+#          oneOf:
+#            - properties:
+##                git:
+##                  enum:
+##                    - github
+##                  enumNames:
+##                    - GitHub
+##                github:
+##                  const: github
+#                git_host_url:
+#                  title: Git Host URL
+#                  type: string
+#                  default: github.com
+#                git_owner_name:
+#                  title: GitHub Organization Name or User Name
+#                  type: string
+#                  description: Specify the GitHub Organization or User to register the repository
+#            - properties:
+##                git:
+##                  enum:
+##                    - gitlab
+##                  enumNames:
+##                    - GitLab
+##                gitlab:
+##                  const: gitlab
+#                git_host_url:
+#                  title: Git Host URL
+#                  type: string
+#                  default: gitlab.com
+#                git_owner_name:
+#                  title: GitLab Group Name or User Name
+#                  type: string
+#                  description: Specify the GitLab Group or User to register the repository
 
   steps:
     - id: sourcecode_template
