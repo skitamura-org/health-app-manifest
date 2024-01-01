@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   # pipelines
   - pipeline.yaml
+  - pipelinerun.yaml
   # tasks
   - sonarqube.yaml
   - git-cli.yaml
