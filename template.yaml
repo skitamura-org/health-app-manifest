@@ -165,28 +165,20 @@ spec:
         defaultBranch: develop
         protectDefaultBranch: false
 
-#    - id: register-to-github
-#      if: ${{ parameters.git == "github" }}
-#      name: Registering the Catalog Info Component
-#      action: catalog:register
-#      input:
-#        repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
-#        catalogInfoPath: "/catalog-info.yaml"
-#
-#    - id: register-to-gitlab
-#      if: ${{ parameters.git == "gitlab" }}
-#      name: Registering the Catalog Info Component
-#      action: catalog:register
-#      input:
-#        repoContentsUrl: ${{ steps['publish-app-to-gitlab'].output.repoContentsUrl }}
-#        catalogInfoPath: "/catalog-info.yaml"
-
-    - id: register
+    - id: register-to-github
+      if: ${{ parameters.git == "github" }}
       name: Registering the Catalog Info Component
       action: catalog:register
       input:
-#        repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
-        repoContentsUrl: https://${{ parameters.git_host_url }}/${{ parameters.git_owner_name }}/${{ parameters.app_name }}-app
+        repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+    - id: register-to-gitlab
+      if: ${{ parameters.git == "gitlab" }}
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-app-to-gitlab'].output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
     - id: create-argocd-resources
@@ -201,20 +193,17 @@ spec:
 
   output:
     links:
-      - title: Open the Catalog Info Component
-        icon: catalog
-        entityRef: ${{ steps.register.output.entityRef }}
       - title: Open the Source Code Repository
         if: ${{ parameters.git == "github" }}
         url: ${{ steps.publish-app-to-github.output.remoteUrl }}
-#      - title: Open the Catalog Info Component
-#        if: ${{ parameters.git == "github" }}
-#        icon: catalog
-#        entityRef: ${{ steps.register-to-github.output.entityRef }}
+      - title: Open the Catalog Info Component
+        if: ${{ parameters.git == "github" }}
+        icon: catalog
+        entityRef: ${{ steps.register-to-github.output.entityRef }}
       - title: Open the Source Code Repository
         if: ${{ parameters.git == "gitlab" }}
         url: ${{ steps.publish-app-to-gitlab.output.remoteUrl }}
-#      - title: Open the Catalog Info Component
-#        if: ${{ parameters.git == "gitlab" }}
-#        icon: catalog
-#        entityRef: ${{ steps.register-to-gitlab.output.entityRef }}
+      - title: Open the Catalog Info Component
+        if: ${{ parameters.git == "gitlab" }}
+        icon: catalog
+        entityRef: ${{ steps.register-to-gitlab.output.entityRef }}
