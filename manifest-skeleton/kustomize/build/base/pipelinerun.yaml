@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  Name: ${{ values.app_name }}-pipeline-run
+  name: ${{ values.app_name }}-pipeline-run
 spec:
   pipelineRef:
     name: ${{ values.app_name }}-pipeline
