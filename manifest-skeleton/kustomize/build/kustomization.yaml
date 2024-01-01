@@ -11,7 +11,7 @@ resources:
   - trivy.yaml
   # preparations
   - tekton-pvc.yaml
-  #- trigger-sa.yaml
+  - trigger-sa.yaml
   - eventlistener.yaml
   - triggerbinding.yaml
   - triggertemplate.yaml
