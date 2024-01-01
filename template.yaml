@@ -130,12 +130,8 @@ spec:
         repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
-        defaultBranch: main
-        branch:
-        - name: develop
-          create: true
-          ref: main
-          protect: false
+        defaultBranch: develop
+        protectDefaultBranch: false
 
     - id: register
       name: Registering the Catalog Info Component
