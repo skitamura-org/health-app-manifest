@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/${{ values.org_name }}/${{ values.app_name }}-manifest.git 
     targetRevision: develop
-    path: ./kustomize/build
+    path: ./kustomize/build/${{ values.git }}
   destination:
     server: https://kubernetes.default.svc
     namespace: ${{ values.app_name }}-develop

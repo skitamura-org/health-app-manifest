@@ -12,13 +12,14 @@ resources:
   # preparations
   - tekton-pvc.yaml
   - trigger-sa.yaml
-  - eventlistener.yaml
+#  - eventlistener.yaml
   - triggerbinding.yaml
   - triggertemplate.yaml
   - el-route.yaml 
-  - webhook-playbook-config.yaml
+#  - webhook-playbook-config.yaml
   - job-create-webhook.yaml
-  - external-secret-webhook.yaml
-  - external-secret-webhook-secret.yaml
+#  - external-secret-webhook.yaml
+#  - external-secret-webhook-secret.yaml
   - external-secret-sonar-settings.yaml 
-  - external-secret-github-basic-auth.yaml
+#  - external-secret-github-basic-auth.yaml
+

@@ -7,9 +7,9 @@ spec:
     - name: git-app-rev
       value: $(body.head_commit.id)
     - name: git-app-url
-      value: 'https://github.com/${{ values.org_name }}/${{ values.app_name }}-app'
+      value: 'https://${{ values.git_host_url }}/${{ values.git_owner_name }}/${{ values.app_name }}-app'
     - name: git-manifests-url
-      value: 'https://github.com/${{ values.org_name }}/${{ values.app_name }}-manifest'
+      value: 'https://${{ values.git_host_url }}/${{ values.git_owner_name }}/${{ values.app_name }}-manifest'
     - name: git-user
       value: $(body.pusher.name)
     - name: git-email

@@ -14,13 +14,21 @@ spec:
   parameters:
     - title: Provide information about the new component
       required:
-        - org_name
+#        - org_name
         - app_name
+        - git_host_url
+        - git_owner_name
         - owner
         - system
       properties:
-        org_name:
-          title: Organization Name
+        git:
+          title: Git Service (GitHub or GitLab)
+          type: string
+        git_host_url:
+          title: Git Host URL
+          type: string
+        git_owner_name:
+          title: Git Owner Name
           type: string
         app_name:
           title: Repository Name
@@ -33,6 +41,7 @@ spec:
         owner:
           title: Owner
           type: string
+          description: Help others understand what this component is deployed by
           ui:field: EntityPicker
           ui:options:
             catalogFilter:
@@ -47,7 +56,57 @@ spec:
             catalogFilter:
               kind:
                 - System
-  
+    - title: Provide information about the git to used
+      required:
+        - git
+      properties:
+        git:
+          title: Git of Destination
+          type: string
+          description: This action will store the application source code on the selected Git server
+#          default: gitlab
+          enum:
+            - github
+            - gitlab
+          enumNames:
+            - GitHub
+            - GitLab
+      dependencies:
+        git:
+          oneOf:
+            - properties:
+              git:
+                enum:
+                  - github
+                enumNames:
+                  - GitHub
+              github:
+                const: github
+              git_host_url:
+                title: Git Host URL
+                type: string
+                default: github.com
+              git_owner_name:
+                title: GitHub Organization Name or User Name
+                type: string
+                description: Specify the GitHub Organization or User to register the repository
+            - properties:
+              git:
+                enum:
+                  - gitlab
+                enumNames:
+                  - GitLab
+              gitlab:
+                const: gitlab
+              git_host_url:
+                title: Git Host URL
+                type: string
+                default: gitlab.com
+              git_owner_name:
+                title: GitLab Group Name or User Name
+                type: string
+                description: Specify the GitLab Group or User to register the repository
+
   steps:
     - id: sourcecode_template
       name: Generating the Source Code Component
@@ -55,56 +114,93 @@ spec:
       input:
         url: ./app-skeleton
         values:
-          org_name: ${{ parameters.org_name }}
+#          org_name: ${{ parameters.org_name }}
+          git: ${{ parameters.git }}
+          git_host_url: ${{ parameters.git_host_url }}
+          git_owner_name: ${{ parameters.git_owner_url }}
           app_name: ${{ parameters.app_name }}
-          owner: ${{ parameters.owner }}
-          system: ${{ parameters.system }}
-          description: ${{ parameters.description }}
+#          owner: ${{ parameters.owner }}
+#          system: ${{ parameters.system }}
+#          description: ${{ parameters.description }}
         targetPath: ./tenant-app
 
-    - id: publish-app
-      name: Publish App Repository
+    - id: publish-app-to-github
+      if: ${{ parameters.github }}
+      name: Publish App Repository to GitHub
       action: publish:github
       input:
-        allowedHosts: ['github.com']
-        repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-app
+#        allowedHosts: ['github.com']
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
         repoVisibility: public
         sourcePath: ./tenant-app
         defaultBranch: develop
         protectDefaultBranch: false
 
-    - id: register
-      name: Registering the Catalog Info Component
-      action: catalog:register
+    - id: publish-app-to-gitlab
+      if: ${{ parameters.gitlab }}
+      name: Publish App Repository to GitLab
+      action: publish:gitlab
       input:
-        repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
-        catalogInfoPath: "/catalog-info.yaml"
+#        allowedHosts: ['github.com']
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+        repoVisibility: public
+        sourcePath: ./tenant-app
+        defaultBranch: develop
+        protectDefaultBranch: false
 
     - id: manifest_template
       name: Generating the CI Component
       action: fetch:template
       input:
-        url: ./manifest-skeleton 
+        url: ./manifest-skeleton
         copyWithoutTemplating:
           - .github/workflows/
         values:
-          org_name: ${{ parameters.org_name }}
+          git: ${{ parameters.git }}
+#          org_name: ${{ parameters.org_name }}
+          git_host_url: ${{ parameters.git_host_url }}
+          git_owner_name: ${{ parameters.git_owner_url }}
           app_name: ${{ parameters.app_name }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
           description: ${{ parameters.description }}
         targetPath: ./tenant-manifest
 
-    - id: publish-manifest
-      name: Publish Manifest Repository
+    - id: publish-manifest-to-github
+      name: Publish Manifest Repository to GitHub
       action: publish:github
       input:
-        allowedHosts: ['github.com']
-        repoUrl: github.com?owner=${{ parameters.org_name }}&repo=${{ parameters.app_name }}-manifest
+#        allowedHosts: ['github.com']
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
         repoVisibility: public
         sourcePath: ./tenant-manifest
         defaultBranch: develop
         protectDefaultBranch: false
+
+    - id: publish-manifest-to-gitlab
+      name: Publish Manifest Repository to GitLab
+      action: publish:gitlab
+      input:
+#        allowedHosts: ['github.com']
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
+        repoVisibility: public
+        sourcePath: ./tenant-manifest
+        defaultBranch: develop
+        protectDefaultBranch: false
+
+    - id: register-to-github
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
+
+    - id: register-to-gitlab
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish-app-to-gitlab'].output.repoContentsUrl }}
+        catalogInfoPath: "/catalog-info.yaml"
 
     - id: create-argocd-resources
       name: Create ArgoCD Resources
@@ -113,13 +209,22 @@ spec:
         appName: ${{ parameters.app_name }}-bootstrap
         argoInstance: main
         namespace: openshift-gitops
-        repoUrl: https://github.com/${{ parameters.org_name }}/${{ parameters.app_name }}-manifest.git
+        repoUrl: https://${{ parameters.git_host_url }}/${{ parameters.git_owner_name }}/${{ parameters.app_name }}-manifest.git
         path: 'argocd/'
 
   output:
     links:
       - title: Open the Source Code Repository
-        url: ${{ steps.publish-app.output.remoteUrl }}
+        if: ${{ parameters.github }}
+        url: ${{ steps.publish-app-to-github.output.remoteUrl }}
       - title: Open the Catalog Info Component
+        if: ${{ parameters.github }}
         icon: catalog
-        entityRef: ${{ steps.register.output.entityRef }}
+        entityRef: ${{ steps.register-to-github.output.entityRef }}
+      - title: Open the Source Code Repository
+        if: ${{ parameters.gitLab }}
+        url: ${{ steps.publish-app-to-gitlab.output.remoteUrl }}
+      - title: Open the Catalog Info Component
+        if: ${{ parameters.gitlab }}
+        icon: catalog
+        entityRef: ${{ steps.register-to-gitlab.output.entityRef }}
