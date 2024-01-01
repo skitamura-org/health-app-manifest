@@ -80,8 +80,8 @@ spec:
 #                    - github
 #                  enumNames:
 #                    - GitHub
-                github:
-                  const: github
+#                github:
+#                  const: github
                 git_host_url:
                   title: Git Host URL
                   type: string
@@ -96,8 +96,8 @@ spec:
 #                    - gitlab
 #                  enumNames:
 #                    - GitLab
-                gitlab:
-                  const: gitlab
+#                gitlab:
+#                  const: gitlab
                 git_host_url:
                   title: Git Host URL
                   type: string
