@@ -47,6 +47,8 @@ spec:
     - title: Provide information about the git to used
       required:
         - git
+        - git_host_url
+        - git_owner_name
       properties:
         git:
           title: Git of Destination
@@ -100,7 +102,6 @@ spec:
       input:
         url: ./app-skeleton
         values:
-          git: ${{ parameters.git }}
           git: ${{ parameters.git }}
           git_host_url: ${{ parameters.git_host_url }}
           git_owner_name: ${{ parameters.git_owner_url }}
