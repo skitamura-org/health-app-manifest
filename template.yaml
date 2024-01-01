@@ -172,6 +172,7 @@ spec:
         repoVisibility: public
         sourcePath: ./tenant-manifest
         defaultBranch: develop
+        protectDefaultBranch: false
 
 #    - id: catalogTemplate
 #      name: Generating the Catalog Info Component
