@@ -111,28 +111,6 @@ spec:
           description: ${{ parameters.description }}
         targetPath: ./tenant-app
 
-    - id: publish-app-to-github
-      if: ${{ parameters.git == "github" }}
-      name: Publish App Repository to GitHub
-      action: publish:github
-      input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
-        repoVisibility: public
-        sourcePath: ./tenant-app
-        defaultBranch: develop
-        protectDefaultBranch: false
-
-    - id: publish-app-to-gitlab
-      if: ${{ parameters.git == "gitlab" }}
-      name: Publish App Repository to GitLab
-      action: publish:gitlab
-      input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
-        repoVisibility: public
-        sourcePath: ./tenant-app
-        defaultBranch: develop
-        protectDefaultBranch: false
-
     - id: manifest_template
       name: Generating the CI Component
       action: fetch:template
@@ -150,21 +128,21 @@ spec:
           description: ${{ parameters.description }}
         targetPath: ./tenant-manifest
 
+    - id: publish-app-to-github
+      if: ${{ parameters.git == "github" }}
+      name: Publish App Repository to GitHub
+      action: publish:github
+      input:
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+        repoVisibility: public
+        sourcePath: ./tenant-app
+        defaultBranch: develop
+        protectDefaultBranch: false
+
     - id: publish-manifest-to-github
       if: ${{ parameters.git == "github" }}
       name: Publish Manifest Repository to GitHub
       action: publish:github
-      input:
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
-        repoVisibility: public
-        sourcePath: ./tenant-manifest
-        defaultBranch: develop
-        protectDefaultBranch: false
-
-    - id: publish-manifest-to-gitlab
-      if: ${{ parameters.git == "gitlab" }}
-      name: Publish Manifest Repository to GitLab
-      action: publish:gitlab
       input:
         repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
         repoVisibility: public
@@ -179,6 +157,28 @@ spec:
       input:
         repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
+
+    - id: publish-app-to-gitlab
+      if: ${{ parameters.git == "gitlab" }}
+      name: Publish App Repository to GitLab
+      action: publish:gitlab
+      input:
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+        repoVisibility: public
+        sourcePath: ./tenant-app
+        defaultBranch: develop
+        protectDefaultBranch: false
+
+    - id: publish-manifest-to-gitlab
+      if: ${{ parameters.git == "gitlab" }}
+      name: Publish Manifest Repository to GitLab
+      action: publish:gitlab
+      input:
+        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
+        repoVisibility: public
+        sourcePath: ./tenant-manifest
+        defaultBranch: develop
+        protectDefaultBranch: false
 
     - id: register-to-gitlab
       if: ${{ parameters.git == "gitlab" }}
