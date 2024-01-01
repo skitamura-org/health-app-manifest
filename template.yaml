@@ -104,7 +104,7 @@ spec:
         values:
           git: ${{ parameters.git }}
           git_host_url: ${{ parameters.git_host_url }}
-          git_owner_name: ${{ parameters.git_owner_url }}
+          git_owner_name: ${{ parameters.git_owner_name }}
           app_name: ${{ parameters.app_name }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
@@ -143,7 +143,7 @@ spec:
         values:
           git: ${{ parameters.git }}
           git_host_url: ${{ parameters.git_host_url }}
-          git_owner_name: ${{ parameters.git_owner_url }}
+          git_owner_name: ${{ parameters.git_owner_name }}
           app_name: ${{ parameters.app_name }}
           owner: ${{ parameters.owner }}
           system: ${{ parameters.system }}
