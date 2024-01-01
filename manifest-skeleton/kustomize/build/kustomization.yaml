@@ -22,3 +22,4 @@ resources:
   - external-secret-webhook.yaml
   - external-secret-webhook-secret.yaml
   - external-secret-sonar-settings.yaml 
+  - external-secret-github-basic-auth.yaml
