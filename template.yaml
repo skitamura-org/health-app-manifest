@@ -121,10 +121,37 @@ spec:
 #          description: ${{ parameters.description }}
         targetPath: ./tenant-app
 
-    - id: publish-app-to-github
-      if: ${{ parameters.git == "github" }}
+#    - id: publish-app-to-github
+#      if: ${{ parameters.git == "github" }}
+#      name: Publish App Repository to GitHub
+#      action: publish:github
+#      input:
+##        allowedHosts: ['github.com']
+#        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+#        repoVisibility: public
+#        sourcePath: ./tenant-app
+#        defaultBranch: develop
+#        protectDefaultBranch: false
+#
+#    - id: publish-app-to-gitlab
+#      if: ${{ parameters.git == "gitlab" }}
+#      name: Publish App Repository to GitLab
+#      action: publish:gitlab
+#      input:
+##        allowedHosts: ['github.com']
+#        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
+#        repoVisibility: public
+#        sourcePath: ./tenant-app
+#        defaultBranch: develop
+#        protectDefaultBranch: false
+
+    - id: publish-app
       name: Publish App Repository to GitHub
-      action: publish:github
+      if: ${{ parameters.git == "github" }}
+      then:
+        action: publish:github
+      else:
+        action: publish:gitlab
       input:
 #        allowedHosts: ['github.com']
         repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
@@ -133,17 +160,6 @@ spec:
         defaultBranch: develop
         protectDefaultBranch: false
 
-    - id: publish-app-to-gitlab
-      if: ${{ parameters.git == "gitlab" }}
-      name: Publish App Repository to GitLab
-      action: publish:gitlab
-      input:
-#        allowedHosts: ['github.com']
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-app
-        repoVisibility: public
-        sourcePath: ./tenant-app
-        defaultBranch: develop
-        protectDefaultBranch: false
 
     - id: manifest_template
       name: Generating the CI Component
@@ -163,20 +179,37 @@ spec:
           description: ${{ parameters.description }}
         targetPath: ./tenant-manifest
 
-    - id: publish-manifest-to-github
-      name: Publish Manifest Repository to GitHub
-      action: publish:github
-      input:
-#        allowedHosts: ['github.com']
-        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
-        repoVisibility: public
-        sourcePath: ./tenant-manifest
-        defaultBranch: develop
-        protectDefaultBranch: false
+#    - id: publish-manifest-to-github
+#      if: ${{ parameters.git == "github" }}
+#      name: Publish Manifest Repository to GitHub
+#      action: publish:github
+#      input:
+##        allowedHosts: ['github.com']
+#        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
+#        repoVisibility: public
+#        sourcePath: ./tenant-manifest
+#        defaultBranch: develop
+#        protectDefaultBranch: false
+#
+#    - id: publish-manifest-to-gitlab
+#      if: ${{ parameters.git == "gitlab" }}
+#      name: Publish Manifest Repository to GitLab
+#      action: publish:gitlab
+#      input:
+##        allowedHosts: ['github.com']
+#        repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
+#        repoVisibility: public
+#        sourcePath: ./tenant-manifest
+#        defaultBranch: develop
+#        protectDefaultBranch: false
 
-    - id: publish-manifest-to-gitlab
+    - id: publish-manifest
       name: Publish Manifest Repository to GitLab
-      action: publish:gitlab
+      if: ${{ parameters.git == "github" }}
+      then:
+        action: publish:github
+      else:
+        action: publish:gitlab
       input:
 #        allowedHosts: ['github.com']
         repoUrl: ${{ parameters.git_host_url }}?owner=${{ parameters.git_owner_name }}&repo=${{ parameters.app_name }}-manifest
@@ -185,18 +218,27 @@ spec:
         defaultBranch: develop
         protectDefaultBranch: false
 
-    - id: register-to-github
-      name: Registering the Catalog Info Component
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
-        catalogInfoPath: "/catalog-info.yaml"
+#    - id: register-to-github
+#      if: ${{ parameters.git == "github" }}
+#      name: Registering the Catalog Info Component
+#      action: catalog:register
+#      input:
+#        repoContentsUrl: ${{ steps['publish-app-to-github'].output.repoContentsUrl }}
+#        catalogInfoPath: "/catalog-info.yaml"
+#
+#    - id: register-to-gitlab
+#      if: ${{ parameters.git == "gitlab" }}
+#      name: Registering the Catalog Info Component
+#      action: catalog:register
+#      input:
+#        repoContentsUrl: ${{ steps['publish-app-to-gitlab'].output.repoContentsUrl }}
+#        catalogInfoPath: "/catalog-info.yaml"
 
-    - id: register-to-gitlab
+    - id: register
       name: Registering the Catalog Info Component
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps['publish-app-to-gitlab'].output.repoContentsUrl }}
+        repoContentsUrl: ${{ steps['publish-app'].output.repoContentsUrl }}
         catalogInfoPath: "/catalog-info.yaml"
 
     - id: create-argocd-resources
@@ -212,16 +254,21 @@ spec:
   output:
     links:
       - title: Open the Source Code Repository
-        if: ${{ parameters.git == "github" }}
-        url: ${{ steps.publish-app-to-github.output.remoteUrl }}
+        url: ${{ steps.publish-app.output.remoteUrl }}
       - title: Open the Catalog Info Component
-        if: ${{ parameters.git == "github" }}
         icon: catalog
-        entityRef: ${{ steps.register-to-github.output.entityRef }}
-      - title: Open the Source Code Repository
-        if: ${{ parameters.git == "gitlab" }}
-        url: ${{ steps.publish-app-to-gitlab.output.remoteUrl }}
-      - title: Open the Catalog Info Component
-        if: ${{ parameters.git == "gitlab" }}
-        icon: catalog
-        entityRef: ${{ steps.register-to-gitlab.output.entityRef }}
+        entityRef: ${{ steps.register.output.entityRef }}
+#      - title: Open the Source Code Repository
+#        if: ${{ parameters.git == "github" }}
+#        url: ${{ steps.publish-app-to-github.output.remoteUrl }}
+#      - title: Open the Catalog Info Component
+#        if: ${{ parameters.git == "github" }}
+#        icon: catalog
+#        entityRef: ${{ steps.register-to-github.output.entityRef }}
+#      - title: Open the Source Code Repository
+#        if: ${{ parameters.git == "gitlab" }}
+#        url: ${{ steps.publish-app-to-gitlab.output.remoteUrl }}
+#      - title: Open the Catalog Info Component
+#        if: ${{ parameters.git == "gitlab" }}
+#        icon: catalog
+#        entityRef: ${{ steps.register-to-gitlab.output.entityRef }}
