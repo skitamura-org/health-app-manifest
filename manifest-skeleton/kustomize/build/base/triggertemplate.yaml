@@ -56,4 +56,4 @@ spec:
             emptyDir: {}
           - name: basic-auth
             secret:
-              secretName: github-basic-auth
+              secretName: ${{ values.git }}-basic-auth
