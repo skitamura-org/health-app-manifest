@@ -11,12 +11,12 @@ spec:
         ref: ${{ values.app_name }}-pipeline-template
       interceptors:
       - ref:
-          name: github
+          name: gitlab
           kind: ClusterInterceptor
         params:
         - name: "secretRef"
           value:
-            secretName: github-webhook
+            secretName: gitlab-webhook
             secretKey: webhook_secret
         - name: "eventTypes"
-          value: ["push"]
+          value: ["Push Hook"]

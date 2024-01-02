@@ -11,11 +11,7 @@ data:
         git_host_url: ${{ values.git_host_url }}
         git_owner: ${{ values.git_owner_name }}
         git_repo: ${{ values.app_name }}-app
-        #git_token: ""
         webhook_url: "webhook-${{ values.app_name }}-el-${{ values.app_name }}-develop" 
-        #cluster_url: ""
-        #webhook_url: https://webhook-${{ values.app_name }}-el-${{ values.app_name }}-dev.apps.aws-cluster-01.sandbox1966.opentlc.com
-        #webhook_secret: ""
       tasks:
         - name: Get current webhook
           uri:
@@ -47,8 +43,6 @@ data:
                 "active": true,
                 "events": [
                     "push",
-                    #"tag_push",
-                    #"releases",
                 ],
                 "config":{
                     "url": "https://{{ webhook_url }}.{{ cluster_url }}",
