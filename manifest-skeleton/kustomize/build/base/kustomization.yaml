@@ -13,11 +13,8 @@ resources:
   # preparations
   - tekton-pvc.yaml
   - trigger-sa.yaml
-#  - eventlistener.yaml
-  - triggerbinding.yaml
   - triggertemplate.yaml
   - el-route.yaml 
-#  - webhook-playbook-config.yaml
   - job-create-webhook.yaml
   - external-secret-webhook.yaml
   - external-secret-webhooksecret.yaml

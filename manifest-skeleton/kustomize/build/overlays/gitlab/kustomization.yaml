@@ -6,3 +6,4 @@ resources:
 
 - eventlistener.yaml
 - webhook-playbook-config.yaml 
+- triggerbinding.yaml 
