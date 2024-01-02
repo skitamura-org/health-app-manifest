@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
 - ../../base
 
+commonLabels:
+  backstage.io/kubernetes-id: ${{ values.app_name }}
+
 namespace: ${{ values.app_name }}-develop
 
 images:
