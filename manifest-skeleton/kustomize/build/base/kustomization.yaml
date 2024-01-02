@@ -20,6 +20,6 @@ resources:
 #  - webhook-playbook-config.yaml
   - job-create-webhook.yaml
   - external-secret-webhook.yaml
-  - external-secret-webhook-secret.yaml
+  - external-secret-webhooksecret.yaml
   - external-secret-sonar-settings.yaml 
-  - external-secret-github-basic-auth.yaml
+  - external-secret-basic-auth.yaml
