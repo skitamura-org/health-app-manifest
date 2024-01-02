@@ -41,7 +41,7 @@ data:
             method: POST
             body_format: form-urlencoded
             body:
-              url: "{{ webhook_url }}.{{ cluster_url}}"
+              url: "https://{{ webhook_url }}.{{ cluster_url}}"
               push_events: true
               tag_push_events: true
               releases_events: true
