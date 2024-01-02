@@ -16,7 +16,7 @@ spec:
         params:
         - name: "secretRef"
           value:
-            secretName: gitlab-webhook
+            secretName: gitlab-webhooksecret
             secretKey: webhook_secret
         - name: "eventTypes"
           value: ["Push Hook"]
