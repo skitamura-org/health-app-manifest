@@ -36,9 +36,9 @@ spec:
   - name: git-manifests-useremail  
     type: string
     description: Git Repo User Email for Manifests
-  - name: git-manifests-user-access-token 
-    type: string
-    description: Git Repo User Access Token for Manifests
+#  - name: git-manifests-user-access-token 
+#    type: string
+#    description: Git Repo User Access Token for Manifests
   tasks:
   - name: git-clone-${{ values.app_name }}
     taskRef:
