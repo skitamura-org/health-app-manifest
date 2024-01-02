@@ -9,6 +9,7 @@ metadata:
     argocd/app-name: ${{ values.app_name }}-dev
     tektonci/build-namespace: ${{ values.app_name }}-develop
     backstage.io/kubernetes-id: ${{ values.app_name }}
+    janus-idp.io/tekton-enabled : 'true'
     janus-idp.io/tekton : ${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.
     github.com/project-slug: ${{ values.org_name }}/${{ values.app_name }}
