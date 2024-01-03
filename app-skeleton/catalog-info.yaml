@@ -12,12 +12,12 @@ metadata:
     janus-idp.io/tekton-enabled : 'true'
     janus-idp.io/tekton : ${{ values.app_name }}
     backstage.io/techdocs-ref: dir:.
-    github.com/project-slug: ${{ values.org_name }}/${{ values.app_name }}
+    github.com/project-slug: ${{ values.git_owner_name }}/${{ values.app_name }}-app
 spec:
   type: service 
-  system: ${{ values.system }}
+  system: ${{ values.system | dump }}
   lifecycle: production
-  owner: ${{ values.owner }}
+  owner: ${{ values.owner | dump }}
   git: ${{ values.git }}
   git_host_url: ${{ values.git_host_url }}
   git_owner_name: ${{ values.git_owner_name }}
