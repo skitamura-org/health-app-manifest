@@ -202,15 +202,15 @@ spec:
     links:
       - title: Open the Source Code Repository
         if: ${{ parameters.git == "github" }}
-        url: ${{ steps.publish-app-to-github.output.remoteUrl }}
+        url: ${{ steps['publish-app-to-github.output'].remoteUrl }}
       - title: Open the Catalog Info Component
         if: ${{ parameters.git == "github" }}
         icon: catalog
-        entityRef: ${{ steps.register-to-github.output.entityRef }}
+        entityRef: ${{ steps['register-to-github'].output.entityRef }}
       - title: Open the Source Code Repository
         if: ${{ parameters.git == "gitlab" }}
-        url: ${{ steps.publish-app-to-gitlab.output.remoteUrl }}
+        url: ${{ steps['publish-app-to-gitlab'].output.remoteUrl }}
       - title: Open the Catalog Info Component
         if: ${{ parameters.git == "gitlab" }}
         icon: catalog
-        entityRef: ${{ steps.register-to-gitlab.output.entityRef }}
+        entityRef: ${{ steps['register-to-gitlab'].output.entityRef }}
